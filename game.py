@@ -2,22 +2,35 @@ import pygame
 import pytmx
 import pyscroll
 import sqlite3
-import tkinter
-import random
+from pygame.locals import *
+from player import Player
 
 base_donnees = sqlite3.connect("game_datas.db")
 curseur = base_donnees.cursor()
 
+pygame.mixer.init()
+kamehameha = pygame.mixer.Sound("assets/kamehameha-sound-effects-made-with-Voicemod-technology.mp3")
+
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+
 class Jeu:
     def __init__(self):
-        self.screen = pygame.display.set_mode((800, 800))
+        self.screen = pygame.display.set_mode((1648, 1056))
         pygame.display.set_caption("Dragon Ball FighterGT")
 
-        tmx_data = pytmx.util_pygame.load_pygame("map.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("map_assets/map.tmx")
         map_data = pyscroll.TiledMapData(tmx_data)
         map_calques = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
 
+        self.player = Player()
+
         self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=1)
+        self.group.add(self.player)
+
+
+
 
 # class Player_infos():
 #     def __init__(self, screen, font):
@@ -67,5 +80,9 @@ class Jeu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == JOYBUTTONDOWN:
+                    if event.button == 0:
+                        kamehameha.play()
+                        print("Bouton A enfoncé ! Kamehameha!")
 
         pygame.quit()
