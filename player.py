@@ -1,15 +1,14 @@
 import pygame
 
-
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.sprite = pygame.image.load('assets/spritegoku.png').convert_alpha()
-        self.image = self.get_image(0, 0)
+        self.sprite = pygame.image.load('assets/sprites/Goku_11.png').convert_alpha()
+        self.image = self.sprite.copy()  # Utilisez une copie pour éviter de modifier l'original
         self.rect = self.image.get_rect()
 
-    def get_image(self, x, y):
-        image = pygame.Surface(self.sprite.get_size())
-        image.blit(self.sprite, (0, 0), (x, y, image.get_width(), image.get_height()))
-        return image
+    def resize(self, new_width, new_height):
+        self.image = pygame.transform.scale(self.sprite, (new_width, new_height))
+        self.rect = self.image.get_rect()
+
 

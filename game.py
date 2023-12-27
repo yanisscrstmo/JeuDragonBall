@@ -25,8 +25,10 @@ class Jeu:
         map_calques = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
 
         self.player = Player()
+        self.player.resize(74,108)
 
         self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=1)
+
         self.group.add(self.player)
 
 
