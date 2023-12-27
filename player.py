@@ -4,7 +4,7 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.sprite = pygame.image.load('assets/spritegoku.png')
+        self.sprite = pygame.image.load('assets/spritegoku.png').convert_alpha()
         self.image = self.get_image(0, 0)
         self.rect = self.image.get_rect()
 
