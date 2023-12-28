@@ -11,8 +11,6 @@ curseur = base_donnees.cursor()
 pygame.mixer.init()
 kamehameha = pygame.mixer.Sound("assets/kamehameha-sound-effects-made-with-Voicemod-technology.mp3")
 
-
-
 class Jeu:
     def __init__(self):
         self.screen = pygame.display.set_mode((1648, 1056))
@@ -30,8 +28,12 @@ class Jeu:
         self.murs = []
 
         for objet in tmx_data.objects:
+            print(objet.type, objet.name, objet.x, objet.y, objet.width, objet.height)
             if objet.type == "collision":
-                self.murs.append(pygame.Rect(objet.x, objet.y,objet.width,objet.height))
+                rect_collision = pygame.Rect(objet.x, objet.y, objet.width, objet.height)
+                self.murs.append(rect_collision)
+
+        print(self.murs)
 
         self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=3)
         self.group.add(self.player)
@@ -78,6 +80,10 @@ class Jeu:
         elif bouton_Y:
             print("bouton Y")
 
+    def gestion_collisions(self):
+        for mur in self.murs:
+
+
     def run(self):
 
         clock = pygame.time.Clock()
@@ -99,3 +105,5 @@ class Jeu:
             clock.tick(60)
 
         pygame.quit()
+
+base_donnees.close()
