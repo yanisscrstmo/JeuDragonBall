@@ -24,11 +24,16 @@ class Jeu:
         map_calques.zoom = 2
 
         player_position = tmx_data.get_object_by_name("Joueur")
-        self.player = Player(player_position.x,player_position.y)
-        self.player.resize(49,72,[255,255,255])
+        self.player = Player(player_position.x,player_position.y,"assets/sprites/Goku_MUI.png")
+        self.player.resize(44,67,[34,177,76])
+
+        self.murs = []
+
+        for objet in tmx_data.objects:
+            if objet.type == "collision":
+                self.murs.append(pygame.Rect(objet.x, objet.y,objet.width,objet.height))
 
         self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=3)
-
         self.group.add(self.player)
 
         pygame.joystick.init()
@@ -40,13 +45,13 @@ class Jeu:
         pressed = pygame.key.get_pressed()
 
         if pressed[pygame.K_UP]:
-            print("haut")
+            self.player.move_down()
         elif pressed[pygame.K_DOWN]:
-            print("bas")
+            self.player.move_up()
         elif pressed[pygame.K_LEFT]:
-            print("gauche")
+            self.player.move_left()
         elif pressed[pygame.K_RIGHT]:
-            print("droite")
+            self.player.move_right()
 
     def recup_input_manette(self):
 
@@ -57,13 +62,13 @@ class Jeu:
         bouton_Y = self.joystick.get_button(3)
 
         if dpad_value == (0, 1):
-            print("D-pad vers le haut")
+            self.player.move_down()
         elif dpad_value == (0, -1):
-            print("D-pad vers le bas")
+            self.player.move_up()
         elif dpad_value == (-1, 0):
-            print("D-pad vers la gauche")
+            self.player.move_left()
         elif dpad_value == (1, 0):
-            print("D-pad vers la droite")
+            self.player.move_right()
         elif bouton_A:
             print("bouton A")
         elif bouton_B:
@@ -74,6 +79,9 @@ class Jeu:
             print("bouton Y")
 
     def run(self):
+
+        clock = pygame.time.Clock()
+
         running = True
 
         while running:
@@ -87,5 +95,7 @@ class Jeu:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
+            clock.tick(60)
 
         pygame.quit()
