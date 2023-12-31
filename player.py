@@ -11,6 +11,8 @@ class Player(pygame.sprite.Sprite):
         self.sprite = pygame.image.load(sprite)
         self.rect = self.sprite.get_rect()
         self.position = [x, y]
+        self.feet = pygame.Rect(0,0,self.rect.width * 0.5, 12)
+        self.ancienne_pos = self.position.copy()
         self.vitesse = 3
         # self.sprites = {
         #     'normal': self.sprite,
@@ -24,6 +26,11 @@ class Player(pygame.sprite.Sprite):
     #     """
     #     self.sprite = self.sprites[key]
     #     self.sprite.set_colorkey(colorkey)
+
+    def save_location(self):
+        self.ancienne_pos = self.position.copy()
+
+
 
     def move_right(self):
         self.position[0] += self.vitesse
@@ -39,6 +46,12 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.topleft = self.position
+        self.feet.midbottom = self.rect.midbottom
+
+    def move_back(self):
+        self.position = self.ancienne_pos
+        self.rect.topleft = self.position
+        self.feet.midbottom = self.rect.midbottom
 
     def resize(self, new_width, new_height, colorkey):
         """

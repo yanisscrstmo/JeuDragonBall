@@ -13,24 +13,24 @@ kamehameha = pygame.mixer.Sound("assets/kamehameha-sound-effects-made-with-Voice
 
 class Jeu:
     def __init__(self):
-        self.screen = pygame.display.set_mode((1648, 1056))
+        self.screen = pygame.display.set_mode((840, 480))
         pygame.display.set_caption("Dragon Ball FighterGT")
 
-        tmx_data = pytmx.util_pygame.load_pygame("map_assets/map.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("map_assets/real_map.tmx")
         map_data = pyscroll.TiledMapData(tmx_data)
         map_calques = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_calques.zoom = 2
 
-        player_position = tmx_data.get_object_by_name("Joueur")
+        player_position = tmx_data.get_object_by_name("player")
         self.player = Player(player_position.x,player_position.y,"assets/sprites/Goku_MUI.png")
-        self.player.resize(44,67,[34,177,76])
+        self.player.resize(29,45,[34,177,76])
 
         self.murs = []
 
-        for objet in tmx_data.objects:
-            print(objet.type, objet.name, objet.x, objet.y, objet.width, objet.height)
-            if objet.type == "collision":
-                rect_collision = pygame.Rect(objet.x, objet.y, objet.width, objet.height)
+        for obj in tmx_data.objects:
+            print(obj.type, obj.name, obj.x, obj.y, obj.width, obj.height)
+            if obj.type == "collision":
+                rect_collision = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                 self.murs.append(rect_collision)
 
         print(self.murs)
@@ -80,9 +80,19 @@ class Jeu:
         elif bouton_Y:
             print("bouton Y")
 
-    def gestion_collisions(self):
-        for mur in self.murs:
+    # def gestion_collisions(self):
+    #     for mur in self.murs:
 
+    def update(self):
+        self.group.update()
+
+        for sprite in self.group.sprites():
+            if sprite.feet.collidelist(self.murs) > -1:
+                sprite.move_back()
+
+    pygame.joystick.init()
+    joystick = pygame.joystick.Joystick(0)
+    joystick.init()
 
     def run(self):
 
@@ -91,9 +101,10 @@ class Jeu:
         running = True
 
         while running:
+            self.player.save_location()
             self.recup_input_clavier()
             self.recup_input_manette()
-            self.group.update()
+            self.update()
             self.group.center(self.player.rect.center)
             self.group.draw(self.screen)
             pygame.display.flip()

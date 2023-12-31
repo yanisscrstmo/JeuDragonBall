@@ -56,7 +56,7 @@ class Player_infos():
 
     def player_health(self):
         self.pv_joueur_1 = self.curseur.execute("SELECT PV FROM Stats WHERE NOM LIKE ?", (self.joueur_1,)).fetchone()[0]
-        self.pv_joueur_2 = self.curseur.execute("SELECT PV FROM Stats WHERE NOM LIKE ?", (self.joueur_2,)).fetchone()[0]
+        self.pv_joueur_2 = self.curseur.execute("SELECT PV FROM Stats WHERE NOM  LIKE ?", (self.joueur_2,)).fetchone()[0]
 
     def player_attack(self):
         self.att_min_joueur_1 = self.curseur.execute("SELECT ATT_MIN FROM Stats WHERE NOM LIKE ?", (self.joueur_1,)).fetchone()[0]
@@ -340,10 +340,10 @@ while run:
 
     #afficher_vies(black, pv)
 
-    # if montrerg_G:
-    #     player2_image, player2_rect = player2.player_return()
-    #     screen.blit(player2_image, player2_rect)
-    #     joueur_1 = "goku_ssj_4"
+    if montrerg_G:
+        player2_image, player2_rect = player2.player_return()
+        screen.blit(player2_image, player2_rect)
+        joueur_1 = "goku_ssj_4"
     if montrerv_G:
         joueur_1 = 'VEGETA'
         player1_image, player1_rect = player1.player_return()
