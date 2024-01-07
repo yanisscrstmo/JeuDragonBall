@@ -4,6 +4,7 @@ import pyscroll
 import sqlite3
 from pygame.locals import *
 from player import Player
+from game_1c1 import Combat
 
 base_donnees = sqlite3.connect("game_datas.db")
 curseur = base_donnees.cursor()
@@ -26,16 +27,23 @@ class Jeu:
         self.player.resize(29,45,[34,177,76])
 
         self.murs = []
+        self.spawn_points = []
 
         for obj in tmx_data.objects:
-            print(obj.type, obj.name, obj.x, obj.y, obj.width, obj.height)
             if obj.type == "collision":
                 rect_collision = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
                 self.murs.append(rect_collision)
+            if obj.type == "spawn_point":
+                rect_spawn = pygame.Rect(obj.x, obj.y, obj.width, obj.height)
+                self.spawn_points.append(rect_spawn)
 
         print(self.murs)
+        print(self.spawn_points)
 
-        self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=3)
+
+
+
+        self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=5)
         self.group.add(self.player)
 
         pygame.joystick.init()
@@ -87,8 +95,16 @@ class Jeu:
         self.group.update()
 
         for sprite in self.group.sprites():
+            if sprite.feet.collidelist(self.spawn_points) > -1:
+                jeu1c1 = Combat()
+                jeu1c1.run()
+
+        for sprite in self.group.sprites():
             if sprite.feet.collidelist(self.murs) > -1:
                 sprite.move_back()
+
+
+
 
     pygame.joystick.init()
     joystick = pygame.joystick.Joystick(0)

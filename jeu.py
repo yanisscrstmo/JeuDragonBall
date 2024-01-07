@@ -2,6 +2,7 @@ import pygame
 import sqlite3
 import pytmx
 import pyscroll
+import random
 
 base_donnees = sqlite3.connect("game_datas.db")
 curseur = base_donnees.cursor()
@@ -391,6 +392,14 @@ while run:
     pygame.display.flip()
     pygame.time.Clock().tick(30)
 
+liste = []
+liste2 = [1,2,3,4,5,6,7,8,9,10]
+element_choisi = random.choice(liste2)
+liste.append(element_choisi)
+liste2.remove(element_choisi)
+
+print(liste)
+print(liste2)
 base_donnees.close()
 pygame.quit()
 quit()
