@@ -1,5 +1,5 @@
 import pygame
-import sys
+# import sys
 import random
 from game import *
 
@@ -51,7 +51,7 @@ class Accueil():
                             #     pygame.time.delay(500)
                             # pygame.time.wait(int(self.troll.get_length() * 650))
                             running = False
-                            if running == False:
+                            if not running:
                                 self.game = Jeu()
                                 self.game.run()
 
@@ -60,8 +60,8 @@ class Accueil():
 
             pygame.draw.rect(self.ecran, self.couleur_bouton, self.rect_bouton, border_radius=10)
 
-            self.texte_bouton = self.police.render("Lancer le jeu", True, (0, 0, 0))
-            self.ecran.blit(self.texte_bouton, (200, 400))
+            texte_bouton = self.police.render("Lancer le jeu", True, (0, 0, 0))
+            self.ecran.blit(texte_bouton, (200, 400))
 
             pygame.display.flip()
 
