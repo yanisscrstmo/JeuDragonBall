@@ -1,8 +1,11 @@
 import pygame
 
 class Fighter():
-    def __init__(self,x,y):
+    def __init__(self,x,y, datax, sprite_sheet,animation_steps):
+        self.sizex = datax[0]
+        # self.sizey = datay[0]
         self.flip = False
+        self.animation_liste = self.images(sprite_sheet,animation_steps)
         self.rect = pygame.Rect((x,y,80,180))
         self.pos_y = 0
         self.jump = False
@@ -10,6 +13,16 @@ class Fighter():
         self.attack_type = 0
         self.health = 100
 
+
+    def images(self,sprite_sheet, animation_steps):
+        animation_liste = []
+        for y,animation in enumerate(animation_steps):
+            temp_img_liste = []
+            for x in range(animation):
+                temp_img = sprite_sheet.subsurface(x * self.sizex,y * self.sizex,self.sizex,self.sizey)
+                temp_img_liste.append(temp_img)
+            animation_liste.append(temp_img_liste)
+        return animation_liste
 
     def movement(self,screen_width, screen_height, surface,target):
         speed = 10

@@ -40,9 +40,6 @@ class Jeu:
         print(self.murs)
         print(self.spawn_points)
 
-
-
-
         self.group = pyscroll.PyscrollGroup(map_layer=map_calques, default_layer=5)
         self.group.add(self.player)
 

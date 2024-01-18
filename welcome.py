@@ -66,4 +66,4 @@ class Accueil():
             pygame.display.flip()
 
         pygame.quit()
-        sys.exit()
+

@@ -17,8 +17,8 @@ class Combat():
 
         self.background_image = pygame.image.load("assets/cellgames.jpg").convert_alpha()
 
-        sprite_sheet_p_1 = pygame.image.load("assets/gokussjbluespsh.png").convert_alpha()
-        sprite_1_steps = [10, 8, 1, 7, 7, 3, 7]
+        self.sprite_sheet_p_1 = pygame.image.load("assets/gokussjbluespsh.png").convert_alpha()
+        self.sprite_1_steps = [10, 8, 1, 7, 7, 3, 7]
 
 
 
@@ -27,18 +27,22 @@ class Combat():
         self.yellow = (255,255,0)
         self.white = (255,255,255)
 
+        self.joueur_1_size = 162
+        self.joueur_1_data = [self.joueur_1_size]
+        self.joueur_2_size = 250
+        self.joueur_2_data = [self.joueur_2_size]
+
+        self.fighter_1 = Fighter(200, 310, self.joueur_1_data, self.sprite_sheet_p_1, self.joueur_1_size)
+        self.fighter_2 = Fighter(1325, 310)
 
 
-    def images(self,sprite_sheet, animation_steps):
-        for i in range(animation_steps):
-            temp_img = sprite_sheet.subsurface()
 
 
     def background(self):
         self.screen.blit(self.background_image, ((self.screen_width - self.background_image.get_width()) // 2, (self.screen_height - self.background_image.get_height()) // 2))
 
-    fighter_1 = Fighter(200, 310,sprite_sheet_p_1, sprite_1_steps)
-    fighter_2 = Fighter(1325, 310)
+
+
 
     def draw_health_bar(self,health,x,y):
         ratio = health / 100
