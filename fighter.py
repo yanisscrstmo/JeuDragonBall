@@ -1,11 +1,11 @@
 import pygame
 
 class Fighter():
-    def __init__(self,x,y, datax, sprite_sheet,animation_steps):
-        self.sizex = datax[0]
+    def __init__(self,x,y,):
+        # self.sizex = datax[0]
         # self.sizey = datay[0]
         self.flip = False
-        self.animation_liste = self.images(sprite_sheet,animation_steps)
+        # self.animation_liste = self.images(sprite_sheet,animation_steps)
         self.rect = pygame.Rect((x,y,80,180))
         self.pos_y = 0
         self.jump = False

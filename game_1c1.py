@@ -32,7 +32,7 @@ class Combat():
         self.joueur_2_size = 250
         self.joueur_2_data = [self.joueur_2_size]
 
-        self.fighter_1 = Fighter(200, 310, self.joueur_1_data, self.sprite_sheet_p_1, self.joueur_1_size)
+        self.fighter_1 = Fighter(200, 310,)
         self.fighter_2 = Fighter(1325, 310)
 
 
